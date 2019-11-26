@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!-- 别名配置 -->
+ <typeAliases>
+   <package name="com.bw.cms.domain"/>
+ </typeAliases>
+ <!-- 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css"href="/resource/bootstrap.min.css"/>
+	<script type="text/javascript" src="/resource/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="/resource/bootstrap.min.js"></script
+ -->
+ 
+ <!-- 配置分页助手拦截器 -->
+<plugins>
+ <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+ 
+ </plugins>
+</configuration>
