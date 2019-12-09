@@ -55,18 +55,18 @@
 								<hr>
 							<dd id="mc">
 								<c:if test="${isCollect==1}">
-									<span style="font-size: 20px; color: red">★ (已收藏)</span>
+								<span style="font-size: 20px; color: red">★ (已收藏)</span>
 								</c:if>
 								
 								
 								<c:if test="${isCollect!=1}">
 									<span style="font-size: 20px; color: blue;"> <a
-										href="javascript:collect()">☆ (未收藏)</a>
+								    href="javascript:collect()">☆ (未收藏)</a> 
 									</span>
 								</c:if>
 							</dd>
 							<dd>
-							<!-- <button type="button" class="btn btn-info" onclick="close()">关闭</button> -->
+							 <button type="button" class="btn btn-info" onclick="close()">关闭</button> 
 							</dd>
 							<dd><fmt:formatDate value="${aritcle.updated }" pattern="yyyy-MM-dd HH:mm:ss"/> </dd>
 							<dd>${article.content }</dd>
@@ -87,7 +87,6 @@
 					
 				</div>
 			</div>
-			
 			
 			<div class="col-md-8">
 				

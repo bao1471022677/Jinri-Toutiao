@@ -1,8 +1,0 @@
-com\bw\cms\dao\ArticleMapper.class
-com\bw\cms\domain\Category.class
-com\bw\cms\domain\User.class
-com\bw\cms\service\ArticleService.class
-com\bw\cms\domain\ArticleWithBLOBs.class
-com\bw\cms\domain\Channel.class
-com\bw\cms\domain\Article.class
-com\bw\cms\service\impl\ArticleServiceImpl.class

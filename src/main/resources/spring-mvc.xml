@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 	<!-- 扫描器 -->
 	<context:component-scan
-		base-package="com.bw.cms.controller"></context:component-scan>
+		base-package="com.wangguansheng.cms.controller"></context:component-scan>
 	<!-- 视图解析图 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -22,7 +22,7 @@
 	<mvc:default-servlet-handler />
 	<!-- mvc注解驱动 -->
 	<mvc:annotation-driven/>
-	<!-- 文件上传的处理类 -->
+	<!-- 文件上传的处理类 enctype="multipart/form-data" -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
 	
@@ -35,7 +35,7 @@
 	    <!-- 不拦截规则 -->
 	    <mvc:exclude-mapping path="/resource/**"/>
 	    <!-- 拦截器处理类 -->
-	    <bean class="com.bw.cms.utils.AdminInterceptor"/>
+	    <bean class="com.wangguansheng.cms.utils.AdminInterceptor"/>
 	 
 	 </mvc:interceptor>
 	 <!-- 个人中心后台拦截器 -->
@@ -45,7 +45,7 @@
 	    <!-- 不拦截规则 -->
 	    <mvc:exclude-mapping path="/resource/**"/>
 	    <!-- 拦截器处理类 -->
-	    <bean class="com.bw.cms.utils.MyInterceptor"/>
+	    <bean class="com.wangguansheng.cms.utils.MyInterceptor"/>
 	 
 	 </mvc:interceptor>
 	

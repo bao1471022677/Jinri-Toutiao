@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 <!-- 别名配置 -->
  <typeAliases>
-   <package name="com.bw.cms.domain"/>
+   <package name="com.wangguansheng.cms.domain"/>
  </typeAliases>
  <!-- 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -210,28 +210,21 @@
 						<div class="card-body">
 						<a href="https://www.tmall.com/"><img alt="" src="/images/tianmao.jpg" style="height: 80px;padding-top: 15px"></a>
 						</div>
-						<div class="card-body">
-							<c:forEach items="${linksInfo.list}" var="l">
-						     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						     <a href="${l.url}" target="_blank">${l.text }</a>
-						    </c:forEach>
-						</div>
+						
 					</div>
 				</div>
 
 			</div>
 
 		</div>
-		<!-- 友情链接 -->
-		<%-- 
-		<div class="row">
-			<div class="col-12">
-				<c:forEach items="${linksInfo.list}" var="l">
-			     	<a href="${l.url}" target="_blank">${l.text }</a>  &nbsp;
-			    </c:forEach>
+		<!-- 友情连接 -->
+		<div class="container" style="background-color: #5555;height: 50px;margin-top: 10px">
+			<div class="row-12">
+				<c:forEach items="${linksInfo.list }" var="list">
+				&nbsp;&nbsp;<a href="${list.url }" translate="_blank">${list.text }</a>&nbsp;&nbsp;
+				</c:forEach>
 			</div>
-		</div> 
-		--%>
+		</div>
 		
 	</div>
 
