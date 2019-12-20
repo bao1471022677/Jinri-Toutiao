@@ -4,6 +4,7 @@ D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\utils\CMSExc
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\controller\PassportController.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\LinksService.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\CollectService.java
+D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\dao\CommentMapper.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\impl\LinksServiceImpl.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\dao\CollectMapper.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\vo\ArticleVO.java
@@ -15,6 +16,7 @@ D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\impl
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\ArticleService.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\ChannelService.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\domain\Links.java
+D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\domain\Comment.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\domain\Channel.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\controller\ChannelController.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\dao\LinksMapper.java
@@ -32,10 +34,12 @@ D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\domain\User.
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\utils\Result.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\controller\IndexController.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\dao\ArticleMapper.java
+D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\impl\CommentServiceImpl.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\controller\AdminController.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\dao\UserMapper.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\impl\ChannelServiceImpl.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\utils\AdminInterceptor.java
+D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\CommentService.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\utils\PageUtil.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\service\impl\UserServiceImpl.java
 D:\EclipseCMS\wangguansheng-cms\src\main\java\com\wangguansheng\cms\utils\GlobalExceptionHandle.java

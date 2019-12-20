@@ -28,9 +28,11 @@ import com.google.gson.Gson;
 import com.wangguansheng.cms.domain.Article;
 import com.wangguansheng.cms.domain.ArticleWithBLOBs;
 import com.wangguansheng.cms.domain.Collect;
+import com.wangguansheng.cms.domain.Comment;
 import com.wangguansheng.cms.domain.User;
 import com.wangguansheng.cms.service.ArticleService;
 import com.wangguansheng.cms.service.CollectService;
+import com.wangguansheng.cms.service.CommentService;
 import com.wangguansheng.cms.utils.ArticleEnum;
 import com.wangguansheng.cms.utils.Result;
 import com.wangguansheng.cms.utils.ResultUtil;
@@ -45,6 +47,9 @@ public class MyController {
 	
 	@Resource
 	private CollectService collectService;// 我的收藏
+	
+	@Resource
+	private CommentService commentService;//评论
 	
 	//个人中心
 	@RequestMapping("index")
@@ -225,6 +230,19 @@ public class MyController {
 	public Result<Collect> deleteCollect(Integer id){
 		collectService.deleteById(id);
 		return ResultUtil.success();
+	}
+	
+	
+	//我的评论
+	@RequestMapping("article/comments")
+	public String comments(Model model,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		Comment comment = new Comment();
+		comment.setUserId(user.getId());
+		PageInfo<Comment> info = commentService.selects(comment, 1, 100);
+		model.addAttribute("info", info);
+		return "my/article/comments";
+		
 	}
 	
 }

@@ -1,8 +1,7 @@
 package com.wangguansheng.cms.controller;
 
 import java.util.ArrayList;
-
-
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -26,12 +26,14 @@ import com.wangguansheng.cms.domain.ArticleWithBLOBs;
 import com.wangguansheng.cms.domain.Category;
 import com.wangguansheng.cms.domain.Channel;
 import com.wangguansheng.cms.domain.Collect;
+import com.wangguansheng.cms.domain.Comment;
 import com.wangguansheng.cms.domain.Links;
 import com.wangguansheng.cms.domain.User;
 import com.wangguansheng.cms.service.ArticleService;
 import com.wangguansheng.cms.service.CategoryService;
 import com.wangguansheng.cms.service.ChannelService;
 import com.wangguansheng.cms.service.CollectService;
+import com.wangguansheng.cms.service.CommentService;
 import com.wangguansheng.cms.service.LinksService;
 import com.wangguansheng.cms.utils.ArticleEnum;
 import com.wangguansheng.cms.utils.Result;
@@ -54,6 +56,9 @@ public class IndexController {
 	
 	@Resource 
 	private CollectService collectService;//收藏文章
+	
+	@Resource
+	private CommentService commentService;//评论
 
 	@RequestMapping(value = { "", "/", "index" })
 	public String index(Article article, Model model, @RequestParam(defaultValue = "1") Integer page,
@@ -185,7 +190,7 @@ public class IndexController {
 	/**
 	 * 
 	 * @Title: article 
-	 * @Description: 文章详情
+	 * @Description: 文章详情 查询评论
 	 * @param model
 	 * @return
 	 * @return: String
@@ -194,6 +199,11 @@ public class IndexController {
 	public String article(Model model, Integer id) {
 		ArticleWithBLOBs article = articleService.selectByPrimaryKey(id);
 		model.addAttribute("article", article);
+		//查询评论
+		Comment comment = new Comment();
+		comment.setArticleId(article.getId());
+		PageInfo<Comment> info = commentService.selects(comment, 1, 100);
+		model.addAttribute("info", info);
 		return "index/articleDetail";
 	}
 	
@@ -212,8 +222,6 @@ public class IndexController {
 
 		String string = article.getContent();
 
-		
-		
 		ArrayList<ArticleVO> list = new ArrayList<ArticleVO>();
 		
 		Gson gson = new Gson();
@@ -245,5 +253,20 @@ public class IndexController {
 		collectService.insert(collect);
 		return ResultUtil.success();
 	}
-
+	
+	//文章评论
+	@PostMapping("addComment")
+	@ResponseBody
+	public boolean addComment(Comment comment,HttpServletRequest request) {
+		//登录人是否登录
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		//判断登录
+		if(user==null) {
+			return false;//没登录
+		}
+		comment.setUserId(user.getId());//得到用户id
+		comment.setCreated(new Date());
+		return commentService.insert(comment)>0;
+	}	
 }

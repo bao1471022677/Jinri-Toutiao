@@ -73,8 +73,19 @@
 						</dl>
 						<!-- 评论行 -->
 						<div class="row" style="background-color: pink;height: 100px">
-					
-							评论行
+							<!-- 评论框 -->
+							<div><jsp:include page="/WEB-INF/views/index/comment.jsp"></jsp:include></div>
+							<!-- 评论 -->
+							<div>
+								<dl>
+							      <c:forEach items="${info.list}" var="comment">
+							      <dt>用户：${comment.user.username }</dt>
+							      <dd>时间：<fmt:formatDate value="${comment.created }" pattern="yyyy-MM-dd HH:mm:ss"/></dd>
+							      <dd>内容：${comment.content }</dd>
+							      <hr>
+							      </c:forEach>
+							   </dl>
+							</div>
 					
 						</div>
 					</div>
