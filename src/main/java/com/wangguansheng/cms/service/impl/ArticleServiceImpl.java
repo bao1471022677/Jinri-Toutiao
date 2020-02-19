@@ -64,6 +64,12 @@ public class ArticleServiceImpl implements ArticleService {
 			throw new RuntimeException("·¢²¼Ê§°Ü");
 		}
 	}
+
+	@Override
+	public void upHits(Integer id) {
+		// TODO Auto-generated method stub
+		articleMapper.upHits(id);
+	}
 	
 	
 

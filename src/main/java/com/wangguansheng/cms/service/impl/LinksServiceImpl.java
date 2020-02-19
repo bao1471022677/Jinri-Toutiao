@@ -2,6 +2,7 @@ package com.wangguansheng.cms.service.impl;
 
 import java.util.Date;
 
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,7 +26,7 @@ public class LinksServiceImpl implements LinksService {
 	@Override
 	public boolean insert(Links links) {
 		// 调用工具类判断是否是有效URL
-		if (!StringUtil.isHttpurl(links.getUrl()))
+		if (!StringUtil.isHttpUrl(links.getUrl()))
 			throw new CMSAjaxException(1, "不是有效的url");
 		links.setCreated(new Date());
 		linksMapper.insert(links);

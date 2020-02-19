@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="/resource/css/cms.css" />
 <script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
-<script type="text/javascript" src="/resource/js/bootstrap.bundle.min.js"></script
+<script type="text/javascript" src="/resource/js/bootstrap.bundle.min.js"></script>
 </head>
 <script type="text/javascript">
 	function collect() {
@@ -24,18 +24,15 @@
 			if (flag.code == 0) {
 				alert(flag.msg);
 				$("#mc").html(
-						"<span style='font-size: 20px;color: red'>★(已收藏)</span>")
+						"<span style='font-size: 20px;color: red'>已收藏</span>")
 			} else {
 				alert(flag.msg);
-
 			}
 		})
-
 	}
 </script>	
 
 <body>
-
 			<div class="container" style="padding-top: 20px">
 				<!-- 第一行 -->
 				<div class="row" style="background-color: #5555;">
@@ -51,17 +48,19 @@
 						<dl>
 							<dt>
 							  <h2>${article.title }</h2>
+							  <span>${article.hits }</span>
+							  <span style="float: right"><a href="/complain?id=${article.id }">举报</a></span>
 							</dt>
 								<hr>
 							<dd id="mc">
 								<c:if test="${isCollect==1}">
-								<span style="font-size: 20px; color: red">★ (已收藏)</span>
+								<span style="font-size: 20px; color: red">已收藏</span>
 								</c:if>
 								
 								
 								<c:if test="${isCollect!=1}">
 									<span style="font-size: 20px; color: blue;"> <a
-								    href="javascript:collect()">☆ (未收藏)</a> 
+								    href="javascript:collect()">未收藏</a> 
 									</span>
 								</c:if>
 							</dd>

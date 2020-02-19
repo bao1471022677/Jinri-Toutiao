@@ -18,4 +18,7 @@ public interface ArticleService {
 
 	boolean insertSelective(ArticleWithBLOBs article);
 	
+	//‰Ø¿¿+1
+	void upHits(Integer id);
+	
 }

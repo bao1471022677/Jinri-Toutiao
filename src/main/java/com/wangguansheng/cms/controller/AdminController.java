@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 import com.wangguansheng.cms.domain.Article;
+import com.wangguansheng.cms.domain.Complain;
 import com.wangguansheng.cms.domain.Links;
 import com.wangguansheng.cms.service.ArticleService;
+import com.wangguansheng.cms.service.ComplainService;
 import com.wangguansheng.cms.service.LinksService;
 import com.wangguansheng.cms.utils.Result;
 import com.wangguansheng.cms.utils.ResultUtil;
+import com.wangguansheng.cms.vo.ComplainVO;
 
 @RequestMapping("admin")
 @Controller
@@ -28,6 +31,9 @@ public class AdminController {
 	
 	@Resource
 	private LinksService linksService;
+	
+	@Resource
+	private ComplainService complainService;//举报
 
 	@RequestMapping("index")
 	public String IndexController() {
@@ -38,7 +44,11 @@ public class AdminController {
 	// 查询文章详情
 	@RequestMapping("article")
 	public String detail(Model model, Integer id) {
+		//添加浏览 +1
+		articleService.upHits(id);
+		
 		Article articleDetails = articleService.selectByPrimaryKey(id);
+		
 		model.addAttribute("articleDetails", articleDetails);
 		return "admin/article/articleDetails";
 	}
@@ -66,6 +76,16 @@ public class AdminController {
 	public Result<Links> add(Links links){
 		linksService.insert(links);
 		return ResultUtil.success();
+	}
+	
+	//查询投诉
+	@GetMapping("article/complains")
+	public String complain(Model model ,ComplainVO complainVO , @RequestParam(defaultValue = "1") Integer page,
+			@RequestParam(defaultValue = "3") Integer pageSize) {
+			
+		PageInfo<Complain> info = complainService.selects(complainVO, page, pageSize);
+		model.addAttribute("info", info);
+		return "admin/article/complains";
 	}
 	
 

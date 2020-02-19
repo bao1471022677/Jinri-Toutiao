@@ -3,6 +3,7 @@ package com.wangguansheng.cms.controller;
 import javax.annotation.Resource;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bw.utils.StringUtil;
 import com.wangguansheng.cms.domain.User;
 import com.wangguansheng.cms.service.UserService;
+import com.wangguansheng.cms.utils.CMSException;
+import com.wangguansheng.cms.utils.CookieUtil;
 import com.wangguansheng.cms.vo.UserVO;
 
 @RequestMapping("passport")
@@ -50,16 +54,35 @@ public class PassportController {
 	 * @return: String
 	 */
 	@PostMapping("login")
-	public String login(Model model, User user, HttpSession session) {
-		User u = userService.login(user);
-
-		if (u.getRole().equals("1")) {// 1:管理员 0:普通用户
-			session.setAttribute("admin", u);
-			return "redirect:/admin/index";// 管理员进入管理员后台
-		} else {
-			session.setAttribute("user", u);
-			return "redirect:/my/index";// 普通注册进入个人中心
+	public String login(Model model, User user,HttpServletResponse response, HttpSession session) {
+		try {
+			User u = userService.login(user);
+			//如果用户勾选了 【记住我】
+			if(StringUtil.hasText(user.getIsRemember())) {
+				CookieUtil.addCookie(response,"username", u.getUsername(), 60 * 60 * 24 * 30);//存一个月
+				CookieUtil.addCookie(response,"password", u.getPassword(), 60 * 60 * 24 * 30);//存一个月
+			}
+			
+			// 根据角色进入不同的页面
+			if("0".equals(u.getRole())){//普通用户,进入个人中心
+				//登录成功.存入session
+				session.setAttribute("user", u);
+				return "redirect:/my/index";
+			}else {
+				//登录成功.存入session
+				session.setAttribute("admin", u);
+				return "redirect:/admin/index";//管理员
+			}
+			
+		} catch (CMSException e) {
+			e.printStackTrace();
+			model.addAttribute("error", e.getMessage());
+		}catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("error", "系统异常,请于管理员联系");
 		}
+		
+		return "passport/login";
 	}
 	/**
 	 * 

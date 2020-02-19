@@ -34,9 +34,19 @@
     content, summary
   </sql>
   
+  <!-- 浏览加一 -->
+  <update id="upHits">
+  	UPDATE `cms_article` SET `hits`=hits+1 WHERE id = #{aid}
+  </update>
+  
+  <!-- 举报次数加1 -->
+  <update id="updateComplainnum">
+  update cms_article set complain_num=complain_num +1 where id=#{id}
+  </update>
+  
   <!-- 查询文章 -->
   <select id="queryArticle" resultMap="BaseResultMap">
-  	select <include refid="Base_Column_List"/> from cms_article 
+  	select <include refid="Base_Column_List"/> from cms_article
   	<where>
 			<if test="title!=null and title!=''">
 				title like "%" #{title} "%"

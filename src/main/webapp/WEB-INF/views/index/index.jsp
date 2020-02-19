@@ -13,8 +13,14 @@
 		overflow: hidden;/*超出范围隐藏*/
 		text-overflow:ellipsis; /*超出用省略号 */
 	}
-
 </style>
+<script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
+<script type="text/javascript">
+	
+	/* 搜索 */
+	
+	
+</script>
 <title>cms系统</title>
 <body>
 	<!-- top -->
@@ -210,7 +216,11 @@
 						<div class="card-body">
 						<a href="https://www.tmall.com/"><img alt="" src="/images/tianmao.jpg" style="height: 80px;padding-top: 15px"></a>
 						</div>
-						
+						<div class="card-body">
+							<c:forEach items="${linksInfo.list }" var="list">
+								&nbsp;&nbsp;<a href="${list.url }" translate="_blank">${list.text }</a>&nbsp;
+							</c:forEach>
+						</div>
 					</div>
 				</div>
 
@@ -221,7 +231,7 @@
 		<div class="container" style="background-color: #5555;height: 50px;margin-top: 10px">
 			<div class="row-12">
 				<c:forEach items="${linksInfo.list }" var="list">
-				&nbsp;&nbsp;<a href="${list.url }" translate="_blank">${list.text }</a>&nbsp;&nbsp;
+					<a href="${list.url }" translate="_blank">${list.text }</a>
 				</c:forEach>
 			</div>
 		</div>
@@ -232,7 +242,8 @@
 	<script type="text/javascript">
 		//分页
 		function goPage(page) {
-			var url = "/?page=" + page+"&channelId="+'${article.channelId}'
+			var key = '${key}';
+			var url = "/?page=" + page+"&channelId="+'${article.channelId}'+"&key="+key;
 			location = url;
 		}
 	</script>

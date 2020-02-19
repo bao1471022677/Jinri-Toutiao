@@ -47,6 +47,10 @@
 								<button type="submit" class="btn btn-success">登录</button>
 								<button type="reset" class="btn btn-warning">重置</button>
 							</div>
+							<div class="form-group form-inline">
+								<label for="isRemember">10天免登陆:</label> <input 
+								class="form-check-input" type="checkbox" name="isRemember">
+							</div>
 						</form>
 					</div>
 

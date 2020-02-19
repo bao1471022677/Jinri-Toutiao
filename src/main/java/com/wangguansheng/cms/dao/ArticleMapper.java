@@ -2,6 +2,8 @@ package com.wangguansheng.cms.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.wangguansheng.cms.domain.Article;
 import com.wangguansheng.cms.domain.ArticleWithBLOBs;
 
@@ -23,5 +25,11 @@ public interface ArticleMapper {
     int updateByPrimaryKeyWithBLOBs(ArticleWithBLOBs record);
 
     int updateByPrimaryKey(Article record);
+
+    //举报加1
+	void updateComplainnum(Integer articleId);
+
+	//添加浏览量
+	void upHits(@Param("aid")Integer id);
     
 }

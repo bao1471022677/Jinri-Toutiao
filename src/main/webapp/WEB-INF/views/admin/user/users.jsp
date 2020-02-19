@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css"
 	href="/resource/css/bootstrap.min.css" />
 <script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
-<script type="text/javascript" src="/resource/css/bootstrap.min.js"></script
+<script type="text/javascript" src="/resource/css/bootstrap.min.js"></script>
 </head>
 <body>
 

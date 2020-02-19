@@ -14,6 +14,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.wangguansheng.cms.domain.Article;
@@ -50,6 +53,9 @@ public class MyController {
 	
 	@Resource
 	private CommentService commentService;//评论
+	
+	@Autowired
+	private KafkaTemplate<String, String> kafkaTemplate; //注入
 	
 	//个人中心
 	@RequestMapping("index")
@@ -138,6 +144,7 @@ public class MyController {
 		  article.setDeleted(0);
 		  article.setCreated(new Date());
 		  article.setUpdated(new Date());
+		  
 		
 		return articleService.insertSelective(article);
 	}

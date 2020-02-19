@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="/resource/css/cms.css" />
 <script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
-<script type="text/javascript" src="/resource/js/bootstrap.bundle.min.js"></script
+<script type="text/javascript" src="/resource/js/bootstrap.bundle.min.js"></script>
 
 
 </head>
@@ -55,6 +55,7 @@
 					<li class="nav-item"><a class="nav-link" href="#" data="/user/queryUser">用户管理</a></li>
 					<li class="nav-item"><a class="nav-link" href="#" data="/article/queryArticle">文章管理</a></li>
 					<li class="nav-item"><a class="nav-link" href="#" data="/admin/queryLinks">友情连接</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" data="/admin/article/complains">举报管理</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">分类管理</a></li>
 					<li class="nav-item"><a class="nav-link " href="#">系统设置</a></li>
 				</ul>

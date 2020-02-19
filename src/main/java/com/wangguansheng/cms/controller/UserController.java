@@ -29,10 +29,11 @@ public class UserController {
 		return "admin/user/users";
 	}
 	
-	//修改状态
+	//修改状态 用户
 	@RequestMapping("update")
 	@ResponseBody
 	public boolean update(User user) {
+		
 		return userService.update(user);
 	}
 	

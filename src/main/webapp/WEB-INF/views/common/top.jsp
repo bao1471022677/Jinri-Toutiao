@@ -19,23 +19,27 @@
 		<a class="navbar-brand" href="/" title="cms">
 		<!-- 图标 -->
 		<img alt="cms" src="/images/tutu.png" class="rounded-circle"></a>
-		<!-- 搜索框：在专业高级二学完ElasticSearch后实现 -->
-		<form class="form-inline">
-			<!-- 时间天气 -->
+			
+		
+		<div>
+		<!-- 时间天气 -->
 			<div class="input-group">
 				<iframe width="420" scrolling="no" height="60" frameborder="0" allowtransparency="true" 
 				src="//i.tianqi.com/index.php?c=code&idicon=1&num=5&site=12" style="margin-left: -220px"></iframe>
 			</div>
-			<div class="input-group">
-				<input type="text" name="key" class="form-control"
-					placeholder="输入关键字..." aria-label="key"
-					aria-describedby="basic-addon1">
-				<div class="input-group-prepend">
-					<button class="input-group-btn btn btn-outline-primary"
-						id="basic-addon1">搜索</button>
+			<!-- 搜索框：在专业高级二学完ElasticSearch后实现 -->
+			<form action="article/queryKey" method="get">
+				<div class="input-group">
+					<input type="text" name="key" class="form-control"
+						placeholder="输入关键字..." aria-label="key" value="${key }"
+						aria-describedby="basic-addon1">
+					<div class="input-group-prepend">
+						<button type="submit"
+							id="basic-addon1">搜索</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 		<!-- 右边登录注册 -->
 		<c:choose>
 			<%-- 登录显示用户菜单 --%>
@@ -55,12 +59,9 @@
 							<li class="nav-item">
 							<a class="nav-link" href="/passport/logout">注销</a>
 							</li>
-							
 						</ul>
-
 					</div>
 				</div>
-
 			</c:when>
 			<c:otherwise>
 				<ul class="nav" style="margin-right: 50px">

@@ -1,6 +1,7 @@
 package com.wangguansheng.cms.service.impl;
 
 import java.util.Date;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,7 +25,7 @@ public class CollectServiceImpl implements CollectService {
 
 	@Override
 	public boolean insert(Collect collect) {
-		if(!StringUtil.isHttpurl(collect.getUrl()))
+		if(!StringUtil.isHttpUrl(collect.getUrl()))
 			throw new CMSAjaxException(1, "不是有效的URL");
 		collect.setCreated(new Date());
 		collectMapper.insert(collect);

@@ -1,19 +1,26 @@
 package com.wangguansheng.cms.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,12 +28,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.wangguansheng.cms.dao.ArticleRepository;
 import com.wangguansheng.cms.domain.Article;
 import com.wangguansheng.cms.domain.ArticleWithBLOBs;
 import com.wangguansheng.cms.domain.Category;
 import com.wangguansheng.cms.domain.Channel;
 import com.wangguansheng.cms.domain.Collect;
 import com.wangguansheng.cms.domain.Comment;
+import com.wangguansheng.cms.domain.Complain;
 import com.wangguansheng.cms.domain.Links;
 import com.wangguansheng.cms.domain.User;
 import com.wangguansheng.cms.service.ArticleService;
@@ -34,8 +43,10 @@ import com.wangguansheng.cms.service.CategoryService;
 import com.wangguansheng.cms.service.ChannelService;
 import com.wangguansheng.cms.service.CollectService;
 import com.wangguansheng.cms.service.CommentService;
+import com.wangguansheng.cms.service.ComplainService;
 import com.wangguansheng.cms.service.LinksService;
 import com.wangguansheng.cms.utils.ArticleEnum;
+import com.wangguansheng.cms.utils.CMSException;
 import com.wangguansheng.cms.utils.Result;
 import com.wangguansheng.cms.utils.ResultUtil;
 import com.wangguansheng.cms.vo.ArticleVO;
@@ -59,6 +70,14 @@ public class IndexController {
 	
 	@Resource
 	private CommentService commentService;//评论
+	
+	@Resource
+	private ComplainService complainService;//举报
+	
+	@SuppressWarnings("rawtypes")
+	@Autowired 
+	private RedisTemplate redisTemplate;//redis  热点文章
+	
 
 	@RequestMapping(value = { "", "/", "index" })
 	public String index(Article article, Model model, @RequestParam(defaultValue = "1") Integer page,
@@ -88,19 +107,38 @@ public class IndexController {
 			}
 		});
 		
-		t2 = new Thread(new Runnable() {
+		t2 = new Thread(new Runnable() {// 查询热点文章的列表
+			@SuppressWarnings("unchecked")
 			@Override
 			public void run() {
-				//如果栏目为空则默认显示热点
+				//redis
 				if (article.getChannelId() == null) {
-					// 查询热点文章的列表
-					Article hot = new Article();
-					hot.setStatus(1);// 审核过的
-					hot.setHot(1);// 热点文章
-					hot.setDeleted(0);// 
-					PageInfo<Article> info = articleService.selects(hot, page, pageSize);
-					model.addAttribute("info", info);
+						
+					List<Article> range = redisTemplate.opsForList().range("article-cms", 0, -1);
+					
+					if(range == null || range.size() == 0) {
+						Article hot = new Article();
+						hot.setStatus(1);// 审核过的
+						hot.setHot(1);// 热点文章
+						hot.setDeleted(0);// 删除
+						
+						PageInfo<Article> selects = articleService.selects(hot, page, pageSize);
+						//reids添加
+						redisTemplate.opsForList().leftPushAll("article-cms", selects.getList().toArray());
+						
+						model.addAttribute("info", selects);
+						System.out.println("mysql添加");
+					}else {
+						//查询reids
+						List<Article> range1 = redisTemplate.opsForList().range("article-cms", 0, -1);
+						PageInfo<Article> info1 = new PageInfo<Article>(range1);
+						model.addAttribute("info", info1);
+						
+						System.out.println("redis查询");
+					}
+						
 				}
+				
 			}
 		});
 		
@@ -269,4 +307,54 @@ public class IndexController {
 		comment.setCreated(new Date());
 		return commentService.insert(comment)>0;
 	}	
+	
+	//去举报
+		@GetMapping("complain")
+		public String complain(Model model ,Article article,HttpSession session) {
+			User user = (User) session.getAttribute("user");
+			if(null!=user) {//如果有户登录
+				article.setUser(user);//封装举报人和举报的文章
+				model.addAttribute("article", article);
+				return "index/complain";//转发到举报页面
+			}
+			
+			return "redirect:/passport/login";//没有登录，先去登录
+			
+		}
+		
+		//执行举报
+		@ResponseBody
+		@PostMapping("complain")
+		public boolean complain(Model model,MultipartFile  file, Complain complain) {
+			if(null!=file &&!file.isEmpty()) {
+				String path="D:/EclipseCMS/wangguansheng-cms/src/main/webapp/resource/pic/";
+				String filename = file.getOriginalFilename();
+			   String newFileName =UUID.randomUUID()+filename.substring(filename.lastIndexOf("."));
+				File f = new File(path,newFileName);
+				try {
+					file.transferTo(f);
+					complain.setPicurl(newFileName);
+					
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+			try {
+				//执行举报
+				 complainService.insert(complain);
+					return true;
+			} catch (CMSException e) {
+				e.printStackTrace();
+				model.addAttribute("error", e.getMessage());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("error", "系统错误，联系管理员");
+			}
+			return false;
+		    
+		}
+	
+	
+	
 }
